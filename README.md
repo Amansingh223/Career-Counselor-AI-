@@ -1,15 +1,5 @@
 #  SheStarts AI - Empowering Women to Restart Their Careers! 
 
-<div align="center">
-  <img src="https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js" alt="Next.js" />
-  <img src="https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white" alt="FastAPI" />
-  <img src="https://img.shields.io/badge/Google_Gemini-4285F4?style=flat-square&logo=google&logoColor=white" alt="Gemini" />
-  <img src="https://img.shields.io/badge/LangGraph-FF9900?style=flat-square" alt="LangGraph" />
-  <img src="https://img.shields.io/badge/Made%20with-❤️-red?style=flat-square" alt="Love" />
-</div>
-
-<br/>
-
 Hello!  Welcome to **SheStarts AI**, a full-stack AI career counselor I built to help women seamlessly re-enter the workforce after a career break. 
 
 As a passionate developer, I wanted to build something that solves a real-world problem using cutting-edge AI. This project uses a **multi-agent AI workflow** to analyze resumes, find skill gaps, and provide a highly personalized learning roadmap.
