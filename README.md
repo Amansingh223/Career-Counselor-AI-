@@ -14,17 +14,17 @@ As a passionate developer, I wanted to build something that solves a real-world 
 
 ---
 
-## ✨ Features That Make It Special
+##  Features That Make It Special
 
-- **🤖 Swarm of 7 AI Agents:** I used **LangGraph** to connect 7 specialized Gemini AI agents. One reads the resume, another finds skill gaps, another suggests jobs, and so on!
-- **📄 Smart Resume Parsing:** Upload a PDF resume and watch the AI extract your skills and give you an ATS score.
-- **🗺️ 30-60-90 Day Roadmap:** Automatically generates a customized week-by-week study plan to get job-ready.
-- **🎤 AI Interview Coach:** Generates 10 behavioral and technical interview questions tailored specifically for the user's target role.
-- **📊 Interactive Dashboard:** Beautiful charts (using Recharts) to visualize the user's job-readiness score!
+- ** Swarm of 7 AI Agents:** I used **LangGraph** to connect 7 specialized Gemini AI agents. One reads the resume, another finds skill gaps, another suggests jobs, and so on!
+- ** Smart Resume Parsing:** Upload a PDF resume and watch the AI extract your skills and give you an ATS score.
+- ** 30-60-90 Day Roadmap:** Automatically generates a customized week-by-week study plan to get job-ready.
+- ** AI Interview Coach:** Generates 10 behavioral and technical interview questions tailored specifically for the user's target role.
+- ** Interactive Dashboard:** Beautiful charts (using Recharts) to visualize the user's job-readiness score!
 
 ---
 
-## 💻 Tech Stack I Used & What I Learned
+##  Tech Stack I Used & What I Learned
 
 Building this project taught me so much about connecting modern frontend frameworks with AI-powered Python backends!
 
