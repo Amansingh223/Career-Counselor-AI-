@@ -1,4 +1,4 @@
-# 🚀 SheStarts AI - Empowering Women to Restart Their Careers! 👩‍💻
+#  SheStarts AI - Empowering Women to Restart Their Careers! 
 
 <div align="center">
   <img src="https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js" alt="Next.js" />
@@ -10,13 +10,13 @@
 
 <br/>
 
-Hello! 👋 Welcome to **SheStarts AI**, a full-stack AI career counselor I built to help women seamlessly re-enter the workforce after a career break. 
+Hello!  Welcome to **SheStarts AI**, a full-stack AI career counselor I built to help women seamlessly re-enter the workforce after a career break. 
 
 As a passionate developer, I wanted to build something that solves a real-world problem using cutting-edge AI. This project uses a **multi-agent AI workflow** to analyze resumes, find skill gaps, and provide a highly personalized learning roadmap.
 
 ---
 
-## 🎯 Why I Built This (The Problem & Solution)
+##  Why I Built This (The Problem & Solution)
 
 **The Problem:** Many talented women take a break for personal reasons (maternity, family, health) and find it intimidating to return to the corporate world. They don't know what skills they are missing or which roles suit them best in today's fast-changing market.
 
@@ -50,7 +50,7 @@ Building this project taught me so much about connecting modern frontend framewo
 
 ---
 
-## 🧠 How The AI Works (Architecture)
+##  How The AI Works (Architecture)
 
 I designed a simple but powerful flow:
 
@@ -72,7 +72,7 @@ graph LR
 
 ---
 
-## 🚀 How To Run My Project Locally
+##  How To Run My Project Locally
 
 Want to test it out? It's super easy!
 
@@ -107,10 +107,10 @@ npm run dev
 
 ---
 
-## 🌱 Future Scope (What I plan to add next!)
+##  Future Scope (What I plan to add next!)
 - [ ] Add OAuth (Google/GitHub login) for easier sign-ups.
 - [ ] Implement a Mock Interview feature using speech-to-text.
 - [ ] Connect with the LinkedIn API to fetch live, relevant job postings.
 
 ---
-**Thank you for checking out my project!** I am incredibly passionate about software development and currently looking for exciting fresher opportunities to learn and grow. Feel free to explore the code! 🚀
+**Thank you for checking out my project!** I am incredibly passionate about software development and currently looking for exciting fresher opportunities to learn and grow. Feel free to explore the code! 
