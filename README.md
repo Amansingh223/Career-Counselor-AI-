@@ -1,180 +1,146 @@
-<div align="center">
-  <h1>🌟 SheStarts AI Career Counselor 🌟</h1>
-  <p><em>An AI-powered full-stack career counseling platform built specially for women restarting their careers.</em></p>
-  
-  ![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)
-  ![Next.js](https://img.shields.io/badge/Frontend-Next.js%2015-black?style=for-the-badge&logo=next.js&logoColor=white)
-  ![Google Gemini](https://img.shields.io/badge/AI-Gemini%201.5%20Flash-4285F4?style=for-the-badge&logo=google&logoColor=white)
-  ![LangGraph](https://img.shields.io/badge/Orchestration-LangGraph-F6821F?style=for-the-badge)
-</div>
+# SheStarts AI Career Counselor
 
----
+An AI-driven career counseling platform designed for workforce reentry, leveraging a multi-agent LLM architecture to provide personalized skill roadmaps, ATS resume parsing, and interview preparation.
 
-## 📖 Table of Contents
-- [About the Project](#-about-the-project)
-- [Key Features](#-key-features)
-- [Architecture](#%EF%B8%8F-architecture)
-- [The 7 AI Agents](#-the-7-ai-agents)
-- [Tech Stack](#-tech-stack)
-- [Getting Started (Installation)](#-getting-started-installation)
-- [Project Structure](#-project-structure)
-- [Access URLs](#-access-urls)
+## System Architecture
 
----
+The application implements a decoupled client-server model, utilizing Next.js for the presentation layer and a FastAPI-based backend that orchestrates Google Gemini LLMs via a LangGraph state machine.
 
-## 🚀 About the Project
-**SheStarts** is a modern, responsive web application designed to help women who are looking to rejoin the workforce. By taking a simple assessment and uploading their resumes, users receive personalized career recommendations, tailored skill roadmaps, and interview coaching generated entirely by a swarm of **Google Gemini** AI agents orchestrated via **LangGraph**.
-
----
-
-## ✨ Key Features
-- **🤖 Multi-Agent AI System:** Uses a LangGraph workflow with 7 specialized AI agents to analyze user profiles from different angles.
-- **📄 Smart Resume Parsing:** Upload your PDF resume, and our AI automatically scores it for ATS compatibility and extracts key skills.
-- **🗺️ Personalized Roadmaps:** Generates a 30-60-90 day learning plan based on identified skill gaps.
-- **💬 Interview Coaching:** Get 10 role-specific interview questions based on the recommended career paths.
-- **📊 Interactive Dashboards:** Visualize your assessment scores and readiness with interactive charts.
-- **📥 PDF Export:** Download your personalized career report in a beautifully formatted PDF.
-
----
-
-## 🏗️ Architecture
-
-The application is built on a clean, decoupled client-server architecture:
-
-```text
-  [ Frontend (Next.js 15) ]  <── REST API ──>  [ Backend (FastAPI) ]
-                                                        │
-                                                        ▼
-                                             [ LangGraph Workflow ]
-                                             ┌────────────────────┐
-                                             │    7 AI Agents     │
-                                             │   (Gemini 1.5)     │
-                                             └────────────────────┘
-                                                        │
-                                                        ▼
-                                                [ SQLite Database ]
+```mermaid
+graph TD
+    %% Client Tier
+    Client[Client Browser]
+    
+    %% Presentation Tier
+    subgraph Frontend [Next.js Presentation Tier]
+        UI[React UI Components]
+        State[Client State Mgmt]
+        Charts[Recharts Data Viz]
+    end
+    
+    %% Application Tier
+    subgraph Backend [FastAPI Application Tier]
+        API[RESTful Endpoints]
+        Auth[JWT Authentication]
+        
+        subgraph AI_Engine [LangGraph Orchestration Engine]
+            StateGraph((State Graph))
+            Agent1[Assessment Node]
+            Agent2[Skill Gap Node]
+            Agent3[Recommendation Node]
+            Agent4[Roadmap Node]
+            Agent5[Employability Node]
+            Agent6[Resume Analysis Node]
+            Agent7[Interview Coach Node]
+            
+            StateGraph --> Agent1 & Agent2 & Agent3 & Agent4 & Agent5 & Agent6 & Agent7
+        end
+        
+        subgraph Services [Core Services]
+            PDF_Extract[PyMuPDF Resume Parser]
+            PDF_Gen[ReportLab PDF Generator]
+        end
+    end
+    
+    %% Data Tier
+    subgraph Data [Data Persistence]
+        SQLite[(SQLite Database)]
+        ORM[SQLAlchemy ORM]
+    end
+    
+    %% External Services
+    LLM((Google Gemini 1.5 Flash API))
+    
+    %% Relationships
+    Client <-->|HTTP/REST| UI
+    UI <--> State
+    State <-->|Fetch/JSON| API
+    
+    API <--> Auth
+    API <--> AI_Engine
+    API <--> Services
+    API <--> ORM
+    
+    ORM <-->|aiosqlite| SQLite
+    
+    AI_Engine <-->|gRPC/REST| LLM
 ```
 
----
+## Technical Stack
 
-## 🤖 The 7 AI Agents
+### Frontend Application
+- **Framework:** Next.js 15 (App Router, Turbopack)
+- **Library:** React 19
+- **Styling:** Tailwind CSS v4
+- **Data Visualization:** Recharts
 
-Our LangGraph workflow orchestrates the following AI agents to work together seamlessly:
+### Backend Services
+- **Framework:** FastAPI
+- **Concurrency:** Uvicorn (ASGI), Async I/O
+- **AI Orchestration:** LangGraph (Stateful LLM multi-agent workflow)
+- **LLM Provider:** Google Gemini 1.5 Flash
+- **Document Processing:** 
+  - Extraction: PyMuPDF (`fitz`)
+  - Generation: ReportLab
+- **Authentication:** JWT (JSON Web Tokens) via `python-jose`
+- **Data Validation:** Pydantic V2
 
-| # | Agent | Purpose |
-|---|-------|---------|
-| 1 | **Assessment Agent** | Analyzes background, strengths & weaknesses. |
-| 2 | **Skill Gap Agent** | Identifies missing skills needed for modern roles. |
-| 3 | **Career Recommendation Agent** | Recommends top 5 career paths based on the profile. |
-| 4 | **Learning Roadmap Agent** | Creates a detailed 30-60-90 day upskilling plan. |
-| 5 | **Employability Agent** | Scores job-readiness out of 100. |
-| 6 | **Resume Analyzer** | Provides ATS score + actionable improvement tips. |
-| 7 | **Interview Coach** | Generates 10 role-specific interview questions for practice. |
+### Data Persistence
+- **Database:** SQLite
+- **ORM:** SQLAlchemy (Async Engine)
+- **Driver:** `aiosqlite`
 
----
+## AI Workflow (LangGraph)
 
-## 🔑 Tech Stack
+The core intelligent processing is handled by a stateful Directed Acyclic Graph (DAG) built with LangGraph. When a user submits an assessment or uploads a resume, the input state is passed through specific agent nodes:
+1. **Assessment Extraction:** Parses unstructured user input into structured strengths and weaknesses.
+2. **Skill Gap Analysis:** Computes the delta between current competencies and industry standards.
+3. **Recommendation Engine:** Determines the top 5 high-probability career paths.
+4. **Roadmap Generation:** Synthesizes a chronologically structured 30-60-90 day upskilling timeline.
+5. **Employability Scoring:** Quantifies readiness through a weighted heuristic.
+6. **ATS Parsing:** Extracts key entities and evaluates resume formatting.
+7. **Interview Simulation:** Dynamically generates technical and behavioral questions mapped to the recommended roles.
 
-| Layer | Technology Used |
-|-------|-----------------|
-| **Frontend** | Next.js 15, React 19, Tailwind CSS v4, Recharts |
-| **Backend** | Python, FastAPI, SQLAlchemy |
-| **AI Orchestration** | LangGraph |
-| **Large Language Model** | Google Gemini 1.5 Flash |
-| **PDF Processing** | PyMuPDF (parsing), ReportLab (generating) |
-| **Database** | SQLite (Async with aiosqlite) |
-| **Authentication** | JWT (JSON Web Tokens via python-jose) |
-
----
-
-## ⚙️ Getting Started (Installation)
-
-Follow these simple steps to run the project locally on your machine.
+## Developer Setup
 
 ### Prerequisites
-Make sure you have the following installed:
-- **Node.js** (v20+ recommended)
-- **Python** (v3.10+ recommended)
-- **Git**
+- Node.js (v20.x+)
+- Python (v3.10+)
+- Google Gemini API Key
 
-### Step 1: Clone & API Key Setup
-1. Clone this repository to your local machine.
-2. Navigate into the `backend` folder and create a `.env` file.
-3. Add your Google Gemini API key to the `.env` file:
-   ```env
-   GEMINI_API_KEY="your_actual_gemini_api_key_here"
-   ```
-
-### Step 2: Run the App
-We have provided an easy-to-use launch script for Windows users!
-
-#### Option A: One-Click Start (Windows only)
-Just double-click the **`start.bat`** file located in the root folder. It will automatically start both the backend and frontend servers in separate windows.
-
-#### Option B: Manual Start (Mac / Linux / Windows)
-
-**1. Start the Backend:**
-Open a terminal and run:
+### Backend Initialization
 ```bash
+# Navigate to the backend directory
 cd backend
+
+# Install dependencies
 pip install -r requirements.txt
+
+# Configure environment variables
+echo GEMINI_API_KEY="your_api_key_here" > .env
+
+# Initialize the database and start the ASGI server
 python -m uvicorn main:app --reload --port 8000
 ```
 
-**2. Start the Frontend:**
-Open a second terminal and run:
+### Frontend Initialization
 ```bash
+# Navigate to the frontend directory
 cd frontend
+
+# Install package dependencies
 npm install
+
+# Start the Turbopack development server
 npm run dev
 ```
 
----
-
-## 🌐 Access URLs
-
-Once the servers are running, open your browser and navigate to:
-
-| Service | Local URL |
-|---------|-----------|
-| 🎨 **Frontend App** | [http://localhost:3000](http://localhost:3000) |
-| ⚙️ **Backend API** | [http://localhost:8000](http://localhost:8000) |
-| 📚 **API Docs (Swagger)** | [http://localhost:8000/docs](http://localhost:8000/docs) |
-
----
-
-## 📁 Project Structure
-
-```text
-AI Assignment7/
-├── backend/                  # Python FastAPI Backend
-│   ├── main.py               # Main API entrypoint
-│   ├── agents/               # AI Logic
-│   │   ├── nodes.py          # The 7 Gemini AI agent functions
-│   │   └── workflow.py       # LangGraph state graph definition
-│   ├── services/             # Helper services
-│   │   ├── pdf_service.py    # Generates downloadable PDF reports
-│   │   └── resume_parser.py  # Extracts text from uploaded PDFs
-│   ├── models.py             # Database Models (SQLAlchemy)
-│   ├── schemas.py            # API request/response validation (Pydantic)
-│   ├── auth.py               # JWT Authentication logic
-│   ├── config.py             # Environment variables (loads .env)
-│   └── database.py           # Database connection setup
-│
-├── frontend/                 # Next.js Frontend
-│   └── src/app/
-│       ├── page.tsx          # Landing page
-│       ├── auth/             # Login & Registration pages
-│       ├── assessment/       # Multi-step questionnaire form
-│       ├── loading-screen/   # Animated AI status progress screen
-│       ├── dashboard/        # Main dashboard with charts & results
-│       └── resume/           # Resume upload & ATS analysis
-│
-├── start.bat                 # One-click launch script
-└── README.md                 # You are here!
+### Environment Launch Script
+For local Windows development environments, a batch script is provided to concurrently bootstrap the ASGI and Next.js servers:
+```cmd
+.\start.bat
 ```
 
----
-<div align="center">
-  <i>Built with ❤️ for empowering women's careers.</i>
-</div>
+## API Documentation
+When the backend server is active, interactive OpenAPI documentation (Swagger UI) is automatically exposed at:
+`http://localhost:8000/docs`
