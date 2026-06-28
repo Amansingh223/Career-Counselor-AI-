@@ -4,11 +4,13 @@ CareerLift AI Career Counselor — FastAPI Main Application
 
 import json
 import logging
+import httpx
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Depends, HTTPException, status, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse, Response
+from pydantic import BaseModel
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 
@@ -84,6 +86,53 @@ async def register(payload: UserRegister, db: AsyncSession = Depends(get_db)):
     db.add(user)
     await db.commit()
     await db.refresh(user)
+
+    token = create_access_token({"sub": str(user.id)})
+    return {"access_token": token, "token_type": "bearer"}
+
+
+# ── Google OAuth ─────────────────────────────────────────────────────────────
+
+class GoogleAuthPayload(BaseModel):
+    id_token: str
+    name: str | None = None
+    email: str | None = None
+
+
+@app.post("/api/auth/google", response_model=Token, tags=["Auth"])
+async def google_auth(payload: GoogleAuthPayload, db: AsyncSession = Depends(get_db)):
+    """Verify Google ID token and return our own JWT."""
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.get(
+                f"https://oauth2.googleapis.com/tokeninfo?id_token={payload.id_token}"
+            )
+            if response.status_code != 200:
+                raise HTTPException(status_code=401, detail="Invalid Google token")
+            google_data = response.json()
+    except Exception:
+        raise HTTPException(status_code=401, detail="Could not verify Google token")
+
+    email = google_data.get("email") or payload.email
+    name = google_data.get("name") or payload.name or email
+
+    if not email:
+        raise HTTPException(status_code=400, detail="No email found in Google token")
+
+    # Find or create user
+    result = await db.execute(select(User).where(User.email == email))
+    user = result.scalar_one_or_none()
+
+    if not user:
+        import secrets
+        user = User(
+            name=name,
+            email=email,
+            hashed_password=hash_password(secrets.token_hex(32)),  # random password
+        )
+        db.add(user)
+        await db.commit()
+        await db.refresh(user)
 
     token = create_access_token({"sub": str(user.id)})
     return {"access_token": token, "token_type": "bearer"}
