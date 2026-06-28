@@ -212,7 +212,7 @@ export default function LandingPage() {
               AI-powered career counselor with multi-agent workflows
             </div>
 
-            <h1 className="text-4xl font-extrabold leading-tight tracking-tight text-slate-900 md:text-6xl lg:text-7xl">
+            <h1 className="text-4xl font-extrabold leading-tight tracking-tight text-slate-900 md:text-6xl lg:text-7xl animate-fade-in-up">
               Restart Your Professional Journey
               <span className="block text-indigo-600">With AI Clarity & Support</span>
             </h1>
