@@ -76,7 +76,7 @@ I wrote a small script to make starting the app effortless:
 1. Clone the repo: `git clone https://github.com/Amansingh223/Career-Counselor-AI-.git`
 2. Go to the `backend` folder and create a `.env` file with your API key:
    ```env
-   GEMINI_API_KEY="your_api_key_here"
+   GROQ_API_KEY="your_api_key_here"
    ```
 3. Double click the **`start.bat`** file in the main folder! It will automatically install everything and open the app in your browser at `http://localhost:3000`.
 
