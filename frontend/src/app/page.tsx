@@ -208,13 +208,12 @@ export default function LandingPage() {
       <section className="mb-24 bg-gradient-to-b from-indigo-50 via-white to-[#F8FAFC] pb-24 pt-32 md:pt-40">
         <Container>
           <div className="mx-auto max-w-4xl text-center">
-            <div className="mb-8 inline-flex items-center rounded-full border border-indigo-100 bg-indigo-50 px-4 py-2 text-xs font-bold text-indigo-700">
-              AI-powered career counselor with multi-agent workflows
-            </div>
-
-            <h1 className="text-4xl font-extrabold leading-tight tracking-tight text-slate-900 md:text-6xl lg:text-7xl animate-fade-in-up">
-              Restart Your Professional Journey
-              <span className="block text-indigo-600">With AI Clarity & Support</span>
+            <h1 className="text-4xl font-extrabold leading-tight tracking-tight text-slate-900 md:text-6xl lg:text-7xl">
+              <span className="inline-block animate-fade-in-up">Restart&nbsp;</span>
+              <span className="inline-block animate-fade-in-up animate-delay-100">Your&nbsp;</span>
+              <span className="inline-block animate-fade-in-up animate-delay-200">Professional&nbsp;</span>
+              <span className="inline-block animate-fade-in-up animate-delay-300">Journey</span>
+              <span className="block text-indigo-600 animate-fade-in-up animate-delay-400">With AI Clarity & Support</span>
             </h1>
 
             <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-slate-500 md:text-xl md:leading-9">
