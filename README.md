@@ -6,6 +6,12 @@ As a passionate developer, I wanted to build something that solves a real-world 
 
 ---
 
+## 🚀 Live Demo
+
+- **Frontend Application:** [https://career-counselor-ai-pi.vercel.app](https://career-counselor-ai-pi.vercel.app)
+- **Backend API:** [https://career-counselor-ai-646u.onrender.com/docs](https://career-counselor-ai-646u.onrender.com/docs)
+
+---
 ##  Why I Built This (The Problem & Solution)
 
 **The Problem:** Many talented women take a break for personal reasons (maternity, family, health) and find it intimidating to return to the corporate world. They don't know what skills they are missing or which roles suit them best in today's fast-changing market.
@@ -98,7 +104,7 @@ npm run dev
 ---
 
 ##  Future Scope (What I plan to add next!)
-- [ ] Add OAuth (Google/GitHub login) for easier sign-ups.
+- [x] Add OAuth (Google/GitHub login) for easier sign-ups.
 - [ ] Implement a Mock Interview feature using speech-to-text.
 - [ ] Connect with the LinkedIn API to fetch live, relevant job postings.
 
