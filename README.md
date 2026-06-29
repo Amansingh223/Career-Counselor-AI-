@@ -6,7 +6,7 @@ As a passionate developer, I wanted to build something that solves a real-world 
 
 ---
 
-## 🚀 Live Demo
+## Live Demo
 
 - **Frontend Application:** [https://career-counselor-ai-pi.vercel.app](https://career-counselor-ai-pi.vercel.app)
 - **Backend API:** [https://career-counselor-ai-646u.onrender.com/docs](https://career-counselor-ai-646u.onrender.com/docs)
