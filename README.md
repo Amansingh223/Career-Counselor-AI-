@@ -51,19 +51,27 @@ Building this project taught me so much about connecting modern frontend framewo
 I designed a simple but powerful flow:
 
 ```mermaid
-graph LR
-    User[User] -->|Uploads Resume| NextJS(Next.js Frontend)
-    NextJS -->|API Call| FastAPI(FastAPI Backend)
-    FastAPI -->|Triggers| LangGraph{LangGraph AI Workflow}
+graph TD
+    User[User] -->|Logs in via Google OAuth| NextJS(Next.js Frontend)
+    User -->|Fills Form & Uploads Resume| NextJS
+    NextJS -->|API Request| FastAPI(FastAPI Backend)
+    FastAPI -->|Initializes| LangGraph{LangGraph AI Workflow}
     
-    LangGraph --> Agent1[1. Assessment Agent]
-    Agent1 --> Agent2[2. Resume Analyzer]
-    Agent2 --> Agent3[3. Skill Gap Agent]
-    Agent3 --> Agent4[4. Career Suggester]
-    Agent4 --> Agent5[5. Roadmap Maker]
+    subgraph Swarm of 7 Agents
+    LangGraph --> A1[1. Assessment Agent]
+    A1 --> A2[2. Skill Gap Agent]
+    A2 --> A3[3. Career Suggestion Agent]
+    A3 --> A4[4. Roadmap Agent]
+    A4 --> A5[5. Employability Score Agent]
+    A5 --> A6[6. Resume Analyzer Agent]
+    A6 --> A7[7. Interview Coach Agent]
+    A7 --> Report[Final Report Generator]
+    end
     
-    LangGraph -->|Saves Result| DB[(SQLite Database)]
-    DB --> NextJS
+    Report -->|Stores Data| DB[(SQLite Database)]
+    DB --> FastAPI
+    FastAPI -->|JSON Response| NextJS
+    NextJS -->|Renders| Dashboard[Interactive Dashboard]
 ```
 
 ---
